@@ -1,4 +1,4 @@
-# my-report
-This is my first Repository
+# Python Basics 
+Python Numpy and Pandas libraries
 <br>
 author-Shahu Patil(DKTE)

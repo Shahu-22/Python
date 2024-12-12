@@ -1,0 +1,44 @@
+import pandas as pd
+import plotly.graph_objects as go
+
+# Load the dataset
+df = pd.read_csv('NIFTY_6month.csv')
+
+# Strip any extra spaces in column names
+df.columns = df.columns.str.strip()
+
+# Convert 'Date' column to datetime format
+df['Date'] = pd.to_datetime(df['Date'], format='%d-%b-%Y')
+
+# Create an interactive plot using Plotly
+fig = go.Figure()
+
+# Add Close, Open, High, and Low lines with hover functionality
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines+markers', 
+                         name='Close Price', line=dict(color='blue'),
+                         hovertemplate='Date: %{x}<br>Close Price: ₹%{y}<extra></extra>'))
+
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Open'], mode='lines+markers', 
+                         name='Open Price', line=dict(color='green'),
+                         hovertemplate='Date: %{x}<br>Open Price: ₹%{y}<extra></extra>'))
+
+fig.add_trace(go.Scatter(x=df['Date'], y=df['High'], mode='lines+markers', 
+                         name='High Price', line=dict(color='red'),
+                         hovertemplate='Date: %{x}<br>High Price: ₹%{y}<extra></extra>'))
+
+fig.add_trace(go.Scatter(x=df['Date'], y=df['Low'], mode='lines+markers', 
+                         name='Low Price', line=dict(color='orange'),
+                         hovertemplate='Date: %{x}<br>Low Price: ₹%{y}<extra></extra>'))
+
+# Customize layout
+fig.update_layout(
+    title='NSE Nifty 50 - Price Series with Hover Tooltips',
+    xaxis_title='Date',
+    yaxis_title='Price (₹)',
+    template='plotly_dark',  # Choose a theme for the plot
+    xaxis_tickangle=45,
+    hovermode='closest'  # Ensures that hover info is displayed for the closest point
+)
+
+# Show the interactive plot
+fig.show()
